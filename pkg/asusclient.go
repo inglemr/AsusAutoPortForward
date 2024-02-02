@@ -104,7 +104,7 @@ func (c *AsusRouterClient) GetPortForwardRules() map[string]PortForwardRule {
 	return forwardRules
 }
 
-func (c *AsusRouterClient) UpdatePortForwardRules(rules []PortForwardRule) {
+func (c *AsusRouterClient) UpdatePortForwardRules(rules map[string]PortForwardRule) {
 	asus_token := c.GetAuthToken().AsusToken
 	form := url.Values{}
 	form.Add("action_mode", "apply")

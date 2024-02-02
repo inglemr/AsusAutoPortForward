@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
-	"github.com/davecgh/go-spew/spew"
 	log "github.com/sirupsen/logrus"
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/api/core/v1"
@@ -73,14 +73,35 @@ func (s *Service) watchServices() {
 			switch event.Type {
 			case watch.Modified:
 				rules := autoportforward.NewPortForwardRulesFromK8sService(*item, s.svcConfig.DefaultTargetAddress)
-				spew.Dump(rules)
+				existingRules := s.rc.GetPortForwardRules()
+				prefix := autoportforward.GetServiceNamePrefix(item.Name, item.Namespace)
+				for k, v := range existingRules {
+					if strings.Contains(v.RuleName, prefix) {
+						delete(existingRules, k)
+					}
+				}
+				for k, v := range rules {
+					existingRules[k] = v
+				}
+				s.rc.UpdatePortForwardRules(existingRules)
 			case watch.Deleted:
-				fmt.Println(item.Name)
+				existingRules := s.rc.GetPortForwardRules()
+				for _, port := range item.Spec.Ports {
+					ruleName := autoportforward.GetPortNameFromK8sPort(item.Name, item.Namespace, port)
+					log.Infof("Deleting rule: %s", ruleName)
+					delete(existingRules, ruleName)
+				}
+				s.rc.UpdatePortForwardRules(existingRules)
+				log.Infof("Deleted Rules for Service: %s", item.Name)
 			case watch.Added:
+				existingRules := s.rc.GetPortForwardRules()
+				rules := autoportforward.NewPortForwardRulesFromK8sService(*item, s.svcConfig.DefaultTargetAddress)
+				for k, v := range rules {
+					existingRules[k] = v
+				}
+				s.rc.UpdatePortForwardRules(existingRules)
 				fmt.Println(item.Name)
 			}
 		}
 	}
 }
-
-// service.kubernetes.io/autoportforward: "true"

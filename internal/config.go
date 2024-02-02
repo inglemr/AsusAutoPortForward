@@ -20,5 +20,10 @@ func GetConfig() Config {
 	config.Username = os.Getenv("ROUTER_USERNAME")
 	config.Password = os.Getenv("ROUTER_PASSWORD")
 	config.DefaultTargetAddress = os.Getenv("DEFAULT_TARGET_ADDRESS")
+
+	log.Debugf("Router Address: %s", config.RouterAddress)
+	log.Debugf("Router Username: %s", config.Username)
+	log.Debugf("Default Target Address: %s", config.DefaultTargetAddress)
+
 	return config
 }

@@ -43,8 +43,12 @@ func getSubstringUpToCharacterLimit(input string, limit int) string {
 	return input[:limit]
 }
 
+func GetServiceNamePrefix(serviceName string, namespace string) string {
+	return "KAPF@" + getSubstringUpToCharacterLimit(namespace, 5) + "-" + getSubstringUpToCharacterLimit(serviceName, 10) + "-"
+}
+
 func GetPortNameFromK8sPort(serviceName string, namespace string, port corev1.ServicePort) string {
 	targetPort := strconv.Itoa(int(port.Port))
 	proto := string(port.Protocol)
-	return getSubstringUpToCharacterLimit(namespace, 8) + "-" + getSubstringUpToCharacterLimit(serviceName, 12) + "-" + getSubstringUpToCharacterLimit(targetPort, 5) + "-" + getSubstringUpToCharacterLimit(proto, 4)
+	return GetServiceNamePrefix(serviceName, namespace) + getSubstringUpToCharacterLimit(targetPort, 5) + "-" + getSubstringUpToCharacterLimit(proto, 4)
 }
