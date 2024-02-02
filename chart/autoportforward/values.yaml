@@ -5,13 +5,10 @@
 autoportforward:
   version: latest
   resources: {}
-  env:
-  - name: ROUTER_ADDRESS
-    value: http://router.asus.com
-  - name: ROUTER_USERNAME
-    value: admin
-  - name: ROUTER_PASSWORD
-    value: 1234
+  config:
+    router_address: http://router.asus.com
+    router_username: admin
+    router_password: 1234
           
 podSecurityContext: {}
 serviceAccount:

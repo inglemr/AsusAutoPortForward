@@ -10,15 +10,14 @@ COPY . /app/
 RUN CGO_ENABLED=0 go build \
     -v \
     -trimpath \
-    -o autoport-forward \
+    -o autoportforward \
     cmd/main.go
 RUN echo "ID=\"distroless\"" > /etc/os-release
-
 # Stage 2 (Final)
 FROM gcr.io/distroless/static:latest
 COPY --from=builder /etc/os-release /etc/os-release
 
-COPY --from=builder /app/autoport-forward  /usr/bin/
-CMD [ "/usr/binautoport-forward " ]
+COPY --from=builder /app/autoportforward  /usr/bin/
+CMD [ "/usr/bin/autoportforward" ]
 
 EXPOSE 8080

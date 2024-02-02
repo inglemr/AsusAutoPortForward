@@ -35,7 +35,9 @@ spec:
           {{- toYaml .| nindent 8 }}
         {{- end }}
         env:
-          {{- range $env_name, $env := .Values.autoportforward.env }}
-          - name: {{ $env_name }}
-            value: "{{ $env }}"
-          {{- end }}
+        - name: ROUTER_ADDRESS
+          value: {{ .Values.autoportforward.config.router_address }}
+        - name: ROUTER_USERNAME
+          value: {{ .Values.autoportforward.config.router_username }}
+        - name: ROUTER_PASSWORD
+          value: {{ .Values.autoportforward.config.router_password }}
