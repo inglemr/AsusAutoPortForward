@@ -34,7 +34,8 @@ Before using this tool, ensure you have the following prerequisites:
 
 
 ## Usage
-Deploy your Kubernetes services with the label service.kubernetes.io/autoportforward: "true" to enable automatic port forwarding.
+
+Deploy your Kubernetes services with the label ```service.kubernetes.io/autoportforward: "true"``` to enable automatic port forwarding.
 
 The Kubernetes Auto Port Forwarder will watch for services with this label and create port forwarding rules on your ASUS router automatically.
 
