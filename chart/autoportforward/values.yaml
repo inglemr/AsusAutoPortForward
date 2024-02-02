@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 autoportforward:
-  version: latest
+  version: main
   resources: {}
   config:
     router_address: http://router.asus.com

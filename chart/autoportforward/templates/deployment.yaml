@@ -13,11 +13,11 @@ spec:
       labels:
         app.kubernetes.io/name: autoportforward-server
     spec: 
+      serviceAccountName: autoportforward
       containers:
       - name: server
-        image: inglemr/autoportforward:{{.Values.autoportforward.version}}
+        image: ghcr.io/inglemr/asusautoportforward:{{.Values.autoportforward.version}}
         imagePullPolicy: Always
-        serviceAccountName: autoportforward
         ports:        
         - name: http
           containerPort: 8080
