@@ -92,11 +92,11 @@ func (c *AsusRouterClient) GetPortForwardRules() map[string]PortForwardRule {
 		case 0:
 			rule.RuleName += string(c)
 		case 1:
-			rule.SourcePort += string(c)
+			rule.TargetPort += string(c)
 		case 2:
 			rule.TargetIP += string(c)
 		case 3:
-			rule.TargetPort += string(c)
+			rule.SourcePort += string(c)
 		case 4:
 			rule.Protocol += string(c)
 		}

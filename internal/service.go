@@ -23,7 +23,12 @@ import (
 
 func NewService(config Config) *Service {
 	routerClient := autoportforward.NewAsusRouterClient(config.RouterAddress, config.Username, config.Password)
-	kConfig, _ := clientcmd.BuildConfigFromFlags("", os.Getenv("KUBECONFIG"))
+	var kConfig *rest.Config
+	if os.Getenv("KUBECONFIG") == "" {
+		kConfig, _ = rest.InClusterConfig()
+	} else {
+		kConfig, _ = clientcmd.BuildConfigFromFlags("", os.Getenv("KUBECONFIG"))
+	}
 	clientset, _ := kubernetes.NewForConfig(kConfig)
 	return &Service{
 		rc:        routerClient,

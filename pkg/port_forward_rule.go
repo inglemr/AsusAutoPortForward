@@ -15,13 +15,21 @@ type PortForwardRule struct {
 }
 
 func (p *PortForwardRule) RouterString() string {
-	return "<" + p.RuleName + ">" + p.SourcePort + ">" + p.TargetIP + ">" + p.TargetPort + ">" + p.Protocol + ">"
+	return "<" + p.RuleName + ">" + p.TargetPort + ">" + p.TargetIP + ">" + p.SourcePort + ">" + p.Protocol + ">"
 }
 
 func NewPortForwardRulesFromK8sService(service corev1.Service, targetAddress string) map[string]PortForwardRule {
 	rules := make(map[string]PortForwardRule)
+	annotations := service.GetAnnotations()
 	for _, port := range service.Spec.Ports {
+		if annotations["autoportforward/"+port.Name+"."+"ignoreport"] == "true" {
+			continue
+		}
 		targetPort := strconv.Itoa(int(port.Port))
+		if annotations["autoportforward/"+port.Name+"."+"usenodeport"] == "true" {
+			targetPort = strconv.Itoa(int(port.NodePort))
+		}
+
 		sourcePort := strconv.Itoa(int(port.NodePort))
 		proto := string(port.Protocol)
 		rule := PortForwardRule{
