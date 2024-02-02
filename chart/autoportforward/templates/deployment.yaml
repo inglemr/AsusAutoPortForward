@@ -41,3 +41,5 @@ spec:
           value: {{ .Values.autoportforward.config.router_username }}
         - name: ROUTER_PASSWORD
           value: {{ .Values.autoportforward.config.router_password }}
+        - name: DEFAULT_TARGET_ADDRESS
+          value: {{ .Values.autoportforward.config.default_target_address }}
