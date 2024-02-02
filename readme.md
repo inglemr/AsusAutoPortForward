@@ -29,7 +29,7 @@ Before using this tool, ensure you have the following prerequisites:
 - `ROUTER_ADDRESS`: The IP address or hostname of your ASUS router.
 - `ROUTER_USERNAME`: The username to access your ASUS router.
 - `ROUTER_PASSWORD`: The password to access your ASUS router.
-- `DEFAULT_TARGET_ADDRESS`: The default target address for port forwarding (e.g., your Kubernetes service).
+- `DEFAULT_TARGET_ADDRESS`: The default target address for port forwarding (e.g., your home server's internal ip).
 - `KUBECONFIG`: Location of the kubeconfig file.
 
 
