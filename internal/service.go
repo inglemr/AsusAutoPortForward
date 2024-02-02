@@ -3,7 +3,6 @@ package internal
 import (
 	autoportforward "autoportforward/pkg"
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -49,15 +48,14 @@ type Service struct {
 
 func (s *Service) StartService() {
 	go s.watchServices()
-	s.mux.HandleFunc("/getforwardrules", s.HandleGetPortForwardRules)
+	s.mux.HandleFunc("/health", s.HandleHealth)
 	http.ListenAndServe(":8080", s.mux)
 }
 
-func (s *Service) HandleGetPortForwardRules(w http.ResponseWriter, r *http.Request) {
-	ports := s.rc.GetPortForwardRules()
-	output, _ := json.Marshal(ports)
+func (s *Service) HandleHealth(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(output)
+	w.Write([]byte("UP"))
 	return
 }
 
