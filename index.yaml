@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  autoportforward:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-02-02T16:00:00.508969968Z"
+    description: A Helm chart for Kubernetes
+    digest: 1fc8d3e8c91714c3cd8eabd272a092c30abdb28e5a1afecfd971d1c0e0f7461c
+    name: autoportforward
+    type: application
+    urls:
+    - https://github.com/inglemr/AsusAutoPortForward/releases/download/autoportforward-0.1.1/autoportforward-0.1.1.tgz
+    version: 0.1.1
+generated: "2024-02-02T16:00:00.508976119Z"
